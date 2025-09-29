@@ -1,24 +1,30 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Omni.Core;
 
-class Program
+namespace Omni
 {
-    static async Task Main()
+    class Program
     {
-        await Task.Delay(-1);
-    }
-
-    private ServiceProvider ConfigureServices()
-    {
-        var services = new ServiceCollection();
-        services.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
+        static async Task Main()
         {
-            GatewayIntents = GatewayIntents.AllUnprivileged
-                             | GatewayIntents.GuildMembers
-                             | GatewayIntents.GuildVoiceStates
-                             | GatewayIntents.MessageContent
-        }));
-        return services.BuildServiceProvider();
+            await ConfigureServices().GetRequiredService<DiscordBotClient>().InitializeAsync();
+            await Task.Delay(-1);
+        }
+
+        private static ServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
+            {
+                GatewayIntents = GatewayIntents.AllUnprivileged
+                                 | GatewayIntents.GuildMembers
+                                 | GatewayIntents.GuildVoiceStates
+                                 | GatewayIntents.MessageContent
+            }));
+            services.AddSingleton<DiscordBotClient>();
+            return services.BuildServiceProvider();
+        }
     }
 }
