@@ -1,8 +1,4 @@
-﻿using Discord;
-using Discord.Interactions;
-using Discord.WebSocket;
-
-namespace Omni.Core
+﻿namespace Omni.Core
 {
     class DiscordBotClient(DiscordSocketClient discordSocketClient, IServiceProvider serviceProvider, InteractionService interactionService)
     {

@@ -1,10 +1,4 @@
-﻿using Discord;
-using Discord.Interactions;
-using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
-using Omni.Core;
-
-namespace Omni
+﻿namespace Omni
 {
     class Program
     {
