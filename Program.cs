@@ -1,4 +1,5 @@
 ﻿using Discord;
+using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Omni.Core;
@@ -23,6 +24,7 @@ namespace Omni
                                  | GatewayIntents.GuildVoiceStates
                                  | GatewayIntents.MessageContent
             }));
+            services.AddSingleton<InteractionService>();
             services.AddSingleton<DiscordBotClient>();
             return services.BuildServiceProvider();
         }
