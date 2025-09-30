@@ -4,6 +4,7 @@ global using Discord.WebSocket;
 
 global using Microsoft.Extensions.DependencyInjection;
 
+global using Omni.Common;
 global using Omni.Core;
 global using Omni.Modules;
 global using Omni.Utils;

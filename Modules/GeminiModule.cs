@@ -9,7 +9,7 @@
         public GeminiModule(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient("GeminiHttpClient");
-            _apiKey = Environment.GetEnvironmentVariable("OMNI_GEMINI_API_KEY") ?? throw new Exception("Gemini API key not found.");
+            _apiKey = EnvironmentVariableHelper.GeminiApiKey;
         }
 
         [SlashCommand("ask", "Ask a question to Gemini.")]
@@ -18,25 +18,18 @@
             await DeferAsync();
             try
             {
-                var payload = JsonSerializer.Serialize(new
-                {
-                    contents = new[]
-                    {
-                        new {
-                            parts = new[] { new { text = prompt } }
-                        }
-                    }
-                });
-                var response = await _httpClient.PostAsync($"v1/models/gemini-2.5-flash:generateContent?key={_apiKey}", new StringContent(payload, Encoding.UTF8, "application/json"));
+                var response = await _httpClient.PostAsJsonAsync($"v1/models/gemini-2.5-flash:generateContent?key={_apiKey}", new { contents = new[] { new { parts = new[] { new { text = prompt } } } } });
                 if (!response.IsSuccessStatusCode)
                 {
+                    var error = await response.Content.ReadAsStringAsync();
+                    await FollowupAsync(embed: EmbedHelper.Error($"Gemini error:\n```json\n{error}\n```"), ephemeral: true);
                     await FollowupAsync(embed: EmbedHelper.Error("Unable to find the requested resource on Gemini."), ephemeral: true);
                     return;
                 }
                 var json = await response.Content.ReadFromJsonAsync<JsonElement>();
                 await FollowupAsync(embed: EmbedHelper.GeminiAsk(prompt, json));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 await FollowupAsync(embed: EmbedHelper.Error("A technical problem occurred while contacting Gemini."), ephemeral: true);
             }

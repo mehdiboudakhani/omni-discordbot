@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-
-namespace Omni.Utils
+﻿namespace Omni.Utils
 {
     class EmbedHelper
     {
