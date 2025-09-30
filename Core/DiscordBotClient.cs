@@ -4,7 +4,7 @@
     {
         public async Task InitializeAsync()
         {
-            await interactionService.AddModulesAsync(typeof(TestModule).Assembly, serviceProvider);
+            await interactionService.AddModulesAsync(typeof(GithubModule).Assembly, serviceProvider);
             discordSocketClient.InteractionCreated += async interaction =>
             {
                 await interactionService.ExecuteCommandAsync(new SocketInteractionContext(discordSocketClient, interaction), serviceProvider);

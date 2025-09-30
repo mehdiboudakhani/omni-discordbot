@@ -18,16 +18,12 @@
                                  | GatewayIntents.GuildVoiceStates
                                  | GatewayIntents.MessageContent
             }));
-            services.AddSingleton(serviceProvider =>
-            {
-                var client = serviceProvider.GetRequiredService<DiscordSocketClient>();
-                return new InteractionService(client);
-            });
+            services.AddSingleton(serviceProvider => new InteractionService(serviceProvider.GetRequiredService<DiscordSocketClient>()));
             services.AddHttpClient("GithubHttpClient", httpClient =>
             {
                 httpClient.BaseAddress = new Uri("https://api.github.com/");
                 httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Omni");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Environment.GetEnvironmentVariable("OMNI_GITHUB_TOKEN"));
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Environment.GetEnvironmentVariable("OMNI_GITHUB_TOKEN")!);
             });
             services.AddHttpClient("GeminiHttpClient", httpClient => httpClient.BaseAddress = new Uri("https://generativelanguage.googleapis.com/"));
             services.AddSingleton<DiscordBotClient>();

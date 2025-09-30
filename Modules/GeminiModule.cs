@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Text;
-
-namespace Omni.Modules
+﻿namespace Omni.Modules
 {
     [Group("gemini", "Interact with Gemini.")]
     public class GeminiModule : InteractionModuleBase<SocketInteractionContext>
