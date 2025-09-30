@@ -1,4 +1,6 @@
-﻿namespace Omni.Utils
+﻿using System.Runtime.InteropServices.JavaScript;
+
+namespace Omni.Utils
 {
     class EmbedHelper
     {
@@ -66,6 +68,20 @@
                     $"{commit.GetProperty("commit").GetProperty("message").GetString()} • [View commit]({commit.GetProperty("html_url").GetString()})"
                 );
             }
+            return embedBuilder.Build();
+        }
+
+        internal static Embed GeminiAsk(string prompt, JsonElement response)
+        {
+            var embedBuilder = new EmbedBuilder()
+                .WithTitle("🤖 Gemini response")
+                .WithDescription($"Question: {prompt}\n " + response
+                    .GetProperty("candidates")[0]
+                    .GetProperty("content")
+                    .GetProperty("parts")[0]
+                    .GetProperty("text")
+                    .GetString())
+                .WithColor(Color.Green);
             return embedBuilder.Build();
         }
     }

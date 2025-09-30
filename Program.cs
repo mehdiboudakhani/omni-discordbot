@@ -29,6 +29,7 @@
                 httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Omni");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Environment.GetEnvironmentVariable("OMNI_GITHUB_TOKEN"));
             });
+            services.AddHttpClient("GeminiHttpClient", httpClient => httpClient.BaseAddress = new Uri("https://generativelanguage.googleapis.com/"));
             services.AddSingleton<DiscordBotClient>();
             return services.BuildServiceProvider();
         }
