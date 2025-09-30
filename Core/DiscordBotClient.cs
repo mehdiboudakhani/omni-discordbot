@@ -4,6 +4,7 @@
     {
         public async Task InitializeAsync()
         {
+            await interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
             discordSocketClient.InteractionCreated += async interaction =>
             {
                 await interactionService.ExecuteCommandAsync(new SocketInteractionContext(discordSocketClient, interaction), serviceProvider);
@@ -18,7 +19,7 @@
 
         private string GetDiscordBotToken()
         {
-            var token = Environment.GetEnvironmentVariable("DISCORD_BOT_TOKEN");
+            var token = Environment.GetEnvironmentVariable("OMNI_DISCORD_BOT_TOKEN");
             if (string.IsNullOrWhiteSpace(token))
                 throw new Exception("The Discord bot token cannot be found.");
             return token;
@@ -26,7 +27,7 @@
 
         private string GetDiscordServerIdentifier()
         {
-            var identifier = Environment.GetEnvironmentVariable("DISCORD_SERVER_IDENTIFIER");
+            var identifier = Environment.GetEnvironmentVariable("OMNI_DISCORD_SERVER_IDENTIFIER");
             if (string.IsNullOrWhiteSpace(identifier))
                 throw new Exception("The Discord server identifier cannot be found.");
             return identifier;
