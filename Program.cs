@@ -23,6 +23,12 @@
                 var client = serviceProvider.GetRequiredService<DiscordSocketClient>();
                 return new InteractionService(client);
             });
+            services.AddHttpClient("GithubHttpClient", httpClient =>
+            {
+                httpClient.BaseAddress = new Uri("https://api.github.com/");
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Omni");
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Environment.GetEnvironmentVariable("OMNI_GITHUB_TOKEN"));
+            });
             services.AddSingleton<DiscordBotClient>();
             return services.BuildServiceProvider();
         }
