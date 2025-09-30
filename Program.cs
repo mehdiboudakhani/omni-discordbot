@@ -18,7 +18,11 @@
                                  | GatewayIntents.GuildVoiceStates
                                  | GatewayIntents.MessageContent
             }));
-            services.AddSingleton<InteractionService>();
+            services.AddSingleton(serviceProvider =>
+            {
+                var client = serviceProvider.GetRequiredService<DiscordSocketClient>();
+                return new InteractionService(client);
+            });
             services.AddSingleton<DiscordBotClient>();
             return services.BuildServiceProvider();
         }
