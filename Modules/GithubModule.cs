@@ -16,13 +16,26 @@
             var response = await _httpClient.GetAsync($"users/{username}");
             if (!response.IsSuccessStatusCode)
             {
-                await RespondAsync("Error : Unable to find the GitHub user.");
+                await RespondAsync(embed: EmbedHelper.ErrorEmbed($"Unable to find the GitHub user {username}."), ephemeral: true);
                 return;
             }
             var content = await response.Content.ReadAsStringAsync();
             using var jsonDocument = JsonDocument.Parse(content);
             var user = jsonDocument.RootElement;
-            await RespondAsync("The user " + user.GetProperty("login").GetString() + " was be found.");
+
+            var name = user.TryGetProperty("name", out var nameProp) ? nameProp.GetString() : null;
+            var bio = user.TryGetProperty("bio", out var bioProp) ? bioProp.GetString() : null;
+
+            var embed = new EmbedBuilder()
+                .WithTitle($"GitHub profile : {user.GetProperty("login").GetString()}")
+                .WithUrl(user.GetProperty("html_url").GetString())
+                .WithThumbnailUrl(user.GetProperty("avatar_url").GetString())
+                .WithColor(Color.Green);
+            if (!string.IsNullOrWhiteSpace(name))
+                embed.AddField("Nom", name, true);
+            if (!string.IsNullOrWhiteSpace(bio))
+                embed.AddField("Bio", bio, true);
+            await RespondAsync(embed: embed.Build());
         }
     }
 }
