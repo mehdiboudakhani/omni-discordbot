@@ -21,8 +21,6 @@
                 var response = await _httpClient.PostAsJsonAsync($"v1/models/gemini-2.5-flash:generateContent?key={_apiKey}", new { contents = new[] { new { parts = new[] { new { text = prompt } } } } });
                 if (!response.IsSuccessStatusCode)
                 {
-                    var error = await response.Content.ReadAsStringAsync();
-                    await FollowupAsync(embed: EmbedHelper.Error($"Gemini error:\n```json\n{error}\n```"), ephemeral: true);
                     await FollowupAsync(embed: EmbedHelper.Error("Unable to find the requested resource on Gemini."), ephemeral: true);
                     return;
                 }
