@@ -82,5 +82,32 @@
                 .WithColor(Color.Green);
             return embedBuilder.Build();
         }
+
+        internal static Embed TemporaryVoiceChannelsAdd(IVoiceChannel hubChannel)
+        {
+            var embedBuilder = new EmbedBuilder()
+                .WithTitle("Add hub channel")
+                .WithDescription($"Hub added: {hubChannel.Name}")
+                .WithColor(Color.Green);
+            return embedBuilder.Build();
+        }
+
+        internal static Embed TemporaryVoiceChannelsRemove(IVoiceChannel hubChannel)
+        {
+            var embedBuilder = new EmbedBuilder()
+                .WithTitle("Remove hub channel")
+                .WithDescription($"Hub removed: {hubChannel.Name}")
+                .WithColor(Color.Green);
+            return embedBuilder.Build();
+        }
+
+        internal static Embed TemporaryVoiceChannelsList(HashSet<ulong> hubChannels)
+        {
+            var embedBuilder = new EmbedBuilder()
+                .WithTitle("List hub channels")
+                .WithDescription(string.Join("\n", hubChannels.Select(id => $"<#{id}>")))
+                .WithColor(Color.Green);
+            return embedBuilder.Build();
+        }
     }
 }

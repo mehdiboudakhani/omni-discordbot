@@ -17,34 +17,24 @@
         public async Task AddHubAsync(IVoiceChannel hubChannel)
         {
             if (_hubChannels.Add(hubChannel.Id))
-                await RespondAsync($"Hub added: {hubChannel.Name}", ephemeral: true);
+                await RespondAsync(embed: EmbedHelper.TemporaryVoiceChannelsAdd(hubChannel), ephemeral: true);
             else
-                await RespondAsync($"{hubChannel.Name} is already a hub.", ephemeral: true);
+                await RespondAsync(embed: EmbedHelper.Error($"{hubChannel.Name} is already a hub."), ephemeral: true);
         }
 
         [SlashCommand("remove-hub", "Remove a hub voice channel")]
         public async Task RemoveHubAsync(IVoiceChannel hubChannel)
         {
             if (_hubChannels.Remove(hubChannel.Id))
-                await RespondAsync($"Hub removed: {hubChannel.Name}", ephemeral: true);
+                await RespondAsync(embed: EmbedHelper.TemporaryVoiceChannelsRemove(hubChannel), ephemeral: true);
             else
-                await RespondAsync($"{hubChannel.Name} was not a hub.", ephemeral: true);
+                await RespondAsync(embed: EmbedHelper.Error($"{hubChannel.Name} was not a hub."), ephemeral: true);
         }
 
         [SlashCommand("list-hubs", "List all configured hub channels.")]
         public async Task ListHubAsync()
         {
-            if (_hubChannels.Count == 0)
-            {
-                await RespondAsync("No hubs configured.", ephemeral: true);
-                return;
-            }
-            var embed = new EmbedBuilder()
-                .WithTitle("Configured hubs")
-                .WithColor(Color.Green)
-                .WithDescription(string.Join("\n", _hubChannels.Select(id => $"<#{id}>")))
-                .Build();
-            await RespondAsync(embed: embed, ephemeral: true);
+            await RespondAsync(embed: EmbedHelper.TemporaryVoiceChannelsList(_hubChannels), ephemeral: true);
         }
 
 
