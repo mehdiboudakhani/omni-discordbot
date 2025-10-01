@@ -1,7 +1,20 @@
 ﻿namespace Omni.Utils
 {
+    /// <summary>
+    /// Provides a collection of helper methods for building standardized <see cref="Embed"/> objects.
+    /// These embeds are used across the Omni bot to format responses.
+    /// </summary>
     class EmbedHelper
     {
+        /// <summary>
+        /// Creates an error embed with a descriptive reason.
+        /// </summary>
+        /// <param name="reason">
+        /// The reason for the error.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> with a red error message.
+        /// </returns>
         internal static Embed Error(string reason)
         {
             var embedBuilder = new EmbedBuilder()
@@ -11,6 +24,15 @@
             return embedBuilder.Build();
         }
 
+        /// <summary>
+        /// Builds an embed containing details of a GitHub user's profile.
+        /// </summary>
+        /// <param name="user">
+        /// The JSON response representing a GitHub user.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> showing the user's profile information.
+        /// </returns>
         internal static Embed GithubProfile(JsonElement user)
         {
             var bio = user.TryGetProperty("bio", out var bioProp) ? bioProp.GetString() : null;
@@ -25,6 +47,15 @@
             return embedBuilder.Build();
         }
 
+        /// <summary>
+        /// Builds an embed displaying information about a GitHub repository.
+        /// </summary>
+        /// <param name="repository">
+        /// The JSON response representing a GitHub repository.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> with repository details such as description and open issues.
+        /// </returns>
         internal static Embed GithubRepository(JsonElement repository)
         {
             var embedBuilder = new EmbedBuilder()
@@ -37,6 +68,21 @@
             return embedBuilder.Build();
         }
 
+        /// <summary>
+        /// Builds an embed listing the last 5 open issues of a GitHub repository.
+        /// </summary>
+        /// <param name="issues">
+        /// The JSON response representing a collection of GitHub issues.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the repository.
+        /// </param>
+        /// <param name="repository">
+        /// The name of the repository.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> containing a formatted list of issues.
+        /// </returns>
         internal static Embed GithubLastIssues(JsonElement issues, string owner, string repository)
         {
             var embedBuilder = new EmbedBuilder()
@@ -53,6 +99,21 @@
             return embedBuilder.Build();
         }
 
+        /// <summary>
+        /// Builds an embed displaying the last five commits of a GitHub repository.
+        /// </summary>
+        /// <param name="commits">
+        /// A JSON array containing commit data from the GitHub API.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the repository.
+        /// </param>
+        /// <param name="repository">
+        /// The name of the repository.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> object showing the commit author, commit date, commit message, and a direct link to each commit.
+        /// </returns>
         internal static Embed GithubLastCommits(JsonElement commits, string owner, string repository)
         {
             var embedBuilder = new EmbedBuilder()
@@ -69,6 +130,18 @@
             return embedBuilder.Build();
         }
 
+        /// <summary>
+        /// Builds an embed displaying the response of the Gemini AI model to a given prompt.
+        /// </summary>
+        /// <param name="prompt">
+        /// The input question or text sent to Gemini.
+        /// </param>
+        /// <param name="response">
+        /// The JSON response returned by the Gemini API.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> object containing the prompt and the AI-generated response text.
+        /// </returns>
         internal static Embed GeminiAsk(string prompt, JsonElement response)
         {
             var embedBuilder = new EmbedBuilder()
@@ -83,6 +156,15 @@
             return embedBuilder.Build();
         }
 
+        /// <summary>
+        /// Builds an embed confirming that a hub voice channel has been added for temporary channel creation.
+        /// </summary>
+        /// <param name="hubChannel">
+        /// The voice channel that has been registered as a hub.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> object confirming the addition of the hub channel.
+        /// </returns>
         internal static Embed TemporaryVoiceChannelsAdd(IVoiceChannel hubChannel)
         {
             var embedBuilder = new EmbedBuilder()
@@ -92,6 +174,15 @@
             return embedBuilder.Build();
         }
 
+        /// <summary>
+        /// Builds an embed confirming that a hub voice channel has been removed from the configuration.
+        /// </summary>
+        /// <param name="hubChannel">
+        /// The voice channel that has been removed as a hub.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> object confirming the removal of the hub channel.
+        /// </returns>
         internal static Embed TemporaryVoiceChannelsRemove(IVoiceChannel hubChannel)
         {
             var embedBuilder = new EmbedBuilder()
@@ -101,6 +192,15 @@
             return embedBuilder.Build();
         }
 
+        /// <summary>
+        /// Builds an embed listing all configured hub voice channels.
+        /// </summary>
+        /// <param name="hubChannels">
+        /// A set of hub voice channel IDs.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Embed"/> object containing a formatted list of hub channels.
+        /// </returns>
         internal static Embed TemporaryVoiceChannelsList(HashSet<ulong> hubChannels)
         {
             var embedBuilder = new EmbedBuilder()

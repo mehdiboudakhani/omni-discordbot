@@ -1,17 +1,37 @@
 ﻿namespace Omni.Modules
 {
+    /// <summary>
+    /// Provides interaction commands for communicating with the Google Gemini API.
+    /// </summary>
     [Group("gemini", "Interact with Gemini.")]
     public class GeminiModule : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeminiModule"/> class.
+        /// Configures the HTTP client used to send requests to the Gemini API and retrieves the API key from environment variables.
+        /// </summary>
+        /// <param name="httpClientFactory">
+        /// The factory used to create named <see cref="HttpClient"/> instances.
+        /// </param>
         public GeminiModule(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient("GeminiHttpClient");
             _apiKey = EnvironmentVariableHelper.GeminiApiKey;
         }
 
+        /// <summary>
+        /// Asks a question to the Gemini model and returns its response.
+        /// </summary>
+        /// <param name="prompt">
+        /// The input text prompt to send to Gemini.
+        /// </param>
+        /// <returns>
+        /// A task representing the asynchronous operation.
+        /// Sends an embedded response containing the model's answer or an error message.
+        /// </returns>
         [SlashCommand("ask", "Ask a question to Gemini.")]
         public async Task AskAsync(string prompt)
         {
