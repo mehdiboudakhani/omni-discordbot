@@ -8,7 +8,7 @@
         string GeminiApiKey { get; }
     }
 
-    public class SecretProvider : ISecretProvider
+    public class SecretProvider(IEnvironmentVariableService environmentVariableService) : ISecretProvider
     {
         private const string DISCORD_BOT_TOKEN = "OMNI_DISCORD_BOT_TOKEN";
         private const string DISCORD_SERVER_IDENTIFIER = "OMNI_DISCORD_SERVER_IDENTIFIER";
@@ -25,7 +25,7 @@
 
         private string Get(string key)
         {
-            var value = Environment.GetEnvironmentVariable(key);
+            var value = environmentVariableService.GetEnvironmentVariable(key);
             if (string.IsNullOrWhiteSpace(value))
                 throw new Exception($"Secret '{key}' is missing.");
             return value!;
