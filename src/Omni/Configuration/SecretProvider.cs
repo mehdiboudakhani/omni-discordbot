@@ -1,5 +1,13 @@
 ﻿namespace Omni.Configuration
 {
+    public interface ISecretProvider
+    {
+        string DiscordBotToken { get; }
+        string DiscordServerIdentifier { get; }
+        string GithubToken { get; }
+        string GeminiApiKey { get; }
+    }
+
     public class SecretProvider : ISecretProvider
     {
         private const string DISCORD_BOT_TOKEN = "OMNI_DISCORD_BOT_TOKEN";
