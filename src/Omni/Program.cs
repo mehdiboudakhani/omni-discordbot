@@ -34,8 +34,7 @@
                                  | GatewayIntents.MessageContent
             }));
             services.AddSingleton(serviceProvider => new InteractionService(serviceProvider.GetRequiredService<DiscordSocketClient>()));
-            services.AddHttpClient("GithubHttpClient", HttpClientConfigurator.ConfigureGithub);
-            services.AddHttpClient("GeminiHttpClient", HttpClientConfigurator.ConfigureGemini);
+            services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<DiscordBotClient>();
             return services.BuildServiceProvider();
         }

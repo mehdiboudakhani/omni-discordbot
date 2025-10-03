@@ -15,9 +15,9 @@
         /// <param name="httpClientFactory">
         /// The factory used to create named <see cref="HttpClient"/> instances.
         /// </param>
-        public GithubModule(IHttpClientFactory httpClientFactory)
+        public GithubModule(IHttpClientProvider httpClientProvider)
         {
-            _httpClient = httpClientFactory.CreateClient("GithubHttpClient");
+            _httpClient = httpClientProvider.GetGithubHttpClient();
         }
 
         /// <summary>

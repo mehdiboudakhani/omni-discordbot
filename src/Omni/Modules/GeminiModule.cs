@@ -16,9 +16,9 @@
         /// <param name="httpClientFactory">
         /// The factory used to create named <see cref="HttpClient"/> instances.
         /// </param>
-        public GeminiModule(IHttpClientFactory httpClientFactory)
+        public GeminiModule(IHttpClientProvider httpClientProvider)
         {
-            _httpClient = httpClientFactory.CreateClient("GeminiHttpClient");
+            _httpClient = httpClientProvider.GetGeminiHttpClient();
             _apiKey = EnvironmentVariableHelper.GeminiApiKey;
         }
 
