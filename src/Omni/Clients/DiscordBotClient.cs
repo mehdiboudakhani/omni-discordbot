@@ -12,7 +12,7 @@
     /// <param name="interactionService">
     /// The interaction service responsible for handling and executing slash commands and other interactions.
     /// </param>
-    class DiscordBotClient(DiscordSocketClient discordSocketClient, IServiceProvider serviceProvider, InteractionService interactionService)
+    class DiscordBotClient(DiscordSocketClient discordSocketClient, IServiceProvider serviceProvider, InteractionService interactionService, ISecretProvider secretProvider)
     {
         /// <summary>
         /// Initializes the Discord bot, loads modules and starts the client.
@@ -25,7 +25,7 @@
             await interactionService.AddModulesAsync(typeof(GithubModule).Assembly, serviceProvider);
             discordSocketClient.InteractionCreated += OnInteractionCreatedAsync;
             discordSocketClient.Ready += OnReadyAsync;
-            await discordSocketClient.LoginAsync(TokenType.Bot, EnvironmentVariableHelper.DiscordBotToken);
+            await discordSocketClient.LoginAsync(TokenType.Bot, secretProvider.DiscordBotToken);
             await discordSocketClient.StartAsync();
         }
 
@@ -50,6 +50,6 @@
         /// A <see cref="Task"/> that represents the asynchronous command registration process.
         /// </returns>
         private async Task OnReadyAsync() =>
-                await interactionService.RegisterCommandsToGuildAsync(ulong.Parse(EnvironmentVariableHelper.DiscordServerIdentifier));
+                await interactionService.RegisterCommandsToGuildAsync(ulong.Parse(secretProvider.DiscordServerIdentifier));
     }
 }

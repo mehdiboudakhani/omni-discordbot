@@ -1,6 +1,6 @@
 ﻿namespace Omni.Configuration
 {
-    public class HttpClientProvider : IHttpClientProvider
+    public class HttpClientProvider(ISecretProvider secretProvider) : IHttpClientProvider
     {
         private const string GithubBaseUrl = "https://api.github.com/";
         private const string GeminiBaseUrl = "https://generativelanguage.googleapis.com/";
@@ -16,7 +16,7 @@
         public HttpClient GetGithubHttpClient()
         {
             var httpClient = new HttpClient();
-            Configure(httpClient, GithubBaseUrl, UserAgent, EnvironmentVariableHelper.GithubToken);
+            Configure(httpClient, GithubBaseUrl, UserAgent, secretProvider.GithubToken);
             return httpClient;
         }
 

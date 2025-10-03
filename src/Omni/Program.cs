@@ -34,6 +34,7 @@
                                  | GatewayIntents.MessageContent
             }));
             services.AddSingleton(serviceProvider => new InteractionService(serviceProvider.GetRequiredService<DiscordSocketClient>()));
+            services.AddSingleton<ISecretProvider, SecretProvider>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<DiscordBotClient>();
             return services.BuildServiceProvider();

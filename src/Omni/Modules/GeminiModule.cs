@@ -16,10 +16,10 @@
         /// <param name="httpClientFactory">
         /// The factory used to create named <see cref="HttpClient"/> instances.
         /// </param>
-        public GeminiModule(IHttpClientProvider httpClientProvider)
+        public GeminiModule(IHttpClientProvider httpClientProvider, ISecretProvider secretProvider)
         {
             _httpClient = httpClientProvider.GetGeminiHttpClient();
-            _apiKey = EnvironmentVariableHelper.GeminiApiKey;
+            _apiKey = secretProvider.GeminiApiKey;
         }
 
         /// <summary>
