@@ -12,7 +12,7 @@
     /// <param name="interactionService">
     /// The interaction service responsible for handling and executing slash commands and other interactions.
     /// </param>
-    class DiscordBotClient(DiscordSocketClient discordSocketClient, IServiceProvider serviceProvider, InteractionService interactionService, ISecretProvider secretProvider)
+    public class DiscordBotClient(DiscordSocketClient discordSocketClient, IServiceProvider serviceProvider, InteractionService interactionService, ISecretProvider secretProvider)
     {
         /// <summary>
         /// Initializes the Discord bot, loads modules and starts the client.
