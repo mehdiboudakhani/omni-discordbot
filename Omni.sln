@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Omni", "src\Omni\Omni.cspro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Omni.Tests", "tests\Omni.Tests\Omni.Tests.csproj", "{64965128-5BF6-4FF4-A64F-86F9D7F80C68}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5C0A6A6C-9108-4ADF-BEC5-26EA33FAC3B0} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{64965128-5BF6-4FF4-A64F-86F9D7F80C68} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3413358-B985-4FB0-9B64-13DA060D1178}
