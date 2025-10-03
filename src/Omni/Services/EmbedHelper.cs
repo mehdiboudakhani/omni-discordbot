@@ -1,4 +1,4 @@
-﻿namespace Omni.Utils
+﻿namespace Omni.Services
 {
     /// <summary>
     /// Provides a collection of helper methods for building standardized <see cref="Embed"/> objects.

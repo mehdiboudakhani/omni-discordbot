@@ -1,4 +1,4 @@
-﻿namespace Omni.Common
+﻿namespace Omni.Configuration
 {
     /// <summary>
     /// Provides centralized configuration methods for <see cref="HttpClient"/> instances used by the Omni application.

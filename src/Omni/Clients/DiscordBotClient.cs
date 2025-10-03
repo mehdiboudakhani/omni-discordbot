@@ -1,4 +1,4 @@
-﻿namespace Omni.Core
+﻿namespace Omni.Clients
 {
     /// <summary>
     /// Provides the core logic for initializing and managing the Omni Discord bot client.

@@ -1,4 +1,4 @@
-﻿namespace Omni.Utils
+﻿namespace Omni.Configuration
 {
     /// <summary>
     /// Provides strongly-typed access to required environment variables used by the application.
