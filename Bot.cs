@@ -1,9 +1,4 @@
-﻿using Discord;
-using Discord.Interactions;
-using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Omni
+﻿namespace Omni
 {
     class Bot
     {
