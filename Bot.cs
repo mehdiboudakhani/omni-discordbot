@@ -26,7 +26,7 @@ namespace Omni
 
         public async Task RunAsync()
         {
-            await _interactionService.AddModulesAsync(typeof(TestModule).Assembly, _serviceProvider);
+            await _interactionService.AddModulesAsync(typeof(TemporaryVoiceChannelsModule).Assembly, _serviceProvider);
             _discordSocketClient.InteractionCreated += OnInteractionCreatedAsync;
             _discordSocketClient.Ready += OnReadyAsync;
             await _discordSocketClient.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("OMNI_DISCORD_BOT_TOKEN"));
