@@ -1,6 +1,7 @@
 ﻿namespace Omni.Modules
 {
     [Group("temporary-voice-channels", "Temporary voice channels management.")]
+    [DefaultMemberPermissions(GuildPermission.Administrator)]
     public class TemporaryVoiceChannelsModule : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly DiscordSocketClient _discordSocketClient;
