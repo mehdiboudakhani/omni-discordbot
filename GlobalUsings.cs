@@ -8,3 +8,4 @@ global using Octokit;
 
 global using Omni.Factories;
 global using Omni.Modules;
+global using Omni.Providers;

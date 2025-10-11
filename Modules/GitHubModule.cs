@@ -6,9 +6,11 @@
         private readonly GitHubClient _gitHubClient;
         private readonly EmbedFactory _embedFactory;
 
-        public GitHubModule(EmbedFactory embedFactory)
+        public GitHubModule(EmbedFactory embedFactory, SecretProvider secretProvider)
         {
             _gitHubClient = new GitHubClient(new ProductHeaderValue("Omni"));
+            if (!string.IsNullOrEmpty(secretProvider.GitHubToken))
+                _gitHubClient.Credentials = new Credentials(secretProvider.GitHubToken);
             _embedFactory = embedFactory;
         }
 
