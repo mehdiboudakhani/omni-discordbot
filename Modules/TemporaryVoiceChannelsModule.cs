@@ -5,12 +5,14 @@
     public class TemporaryVoiceChannelsModule : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly DiscordSocketClient _discordSocketClient;
+        private readonly EmbedFactory _embedFactory;
         private static readonly HashSet<ulong> _hubs = [];
         private static readonly Dictionary<ulong, ulong> _temporaryChannels = [];
 
-        public TemporaryVoiceChannelsModule(DiscordSocketClient discordSocketClient)
+        public TemporaryVoiceChannelsModule(DiscordSocketClient discordSocketClient, EmbedFactory embedFactory)
         {
             _discordSocketClient = discordSocketClient;
+            _embedFactory = embedFactory;
             _discordSocketClient.UserVoiceStateUpdated += HandleTemporaryVoiceChannelsAsync;
         }
 
@@ -18,57 +20,24 @@
         public async Task AddHubAsync(IVoiceChannel channel)
         {
             if (_hubs.Add(channel.Id))
-            {
-                var embed = new EmbedBuilder()
-                    .WithTitle("Temporary voice channels")
-                    .WithDescription($"Hub {channel.Name} added.")
-                    .WithColor(Color.Green)
-                    .Build();
-                await RespondAsync(embed: embed, ephemeral: true);
-            }
+                await RespondAsync(embed: _embedFactory.Success($"Hub {channel.Name} added."), ephemeral: true);
             else
-            {
-                var embed = new EmbedBuilder()
-                    .WithTitle("Temporary voice channels")
-                    .WithDescription($"{channel.Name} is already a hub.")
-                    .WithColor(Color.Red)
-                    .Build();
-                await RespondAsync(embed: embed, ephemeral: true);
-            }
+                await RespondAsync(embed: _embedFactory.Error($"{channel.Name} is already a hub."), ephemeral: true);
         }
 
         [SlashCommand("remove-hub", "Remove a hub.")]
         public async Task RemoveHubAsync(IVoiceChannel channel)
         {
             if (_hubs.Remove(channel.Id))
-            {
-                var embed = new EmbedBuilder()
-                    .WithTitle("Temporary voice channels")
-                    .WithDescription($"Hub {channel.Name} removed.")
-                    .WithColor(Color.Green)
-                    .Build();
-                await RespondAsync(embed: embed, ephemeral: true);
-            }
+                await RespondAsync(embed: _embedFactory.Success($"Hub {channel.Name} removed."), ephemeral: true);
             else
-            {
-                var embed = new EmbedBuilder()
-                    .WithTitle("Temporary voice channels")
-                    .WithDescription($"{channel.Name} is not a hub.")
-                    .WithColor(Color.Red)
-                    .Build();
-                await RespondAsync(embed: embed, ephemeral: true);
-            }
+                await RespondAsync(embed: _embedFactory.Error($"{channel.Name} is not a hub."), ephemeral: true);
         }
 
         [SlashCommand("list-hubs", "List hubs.")]
         public async Task ListHubsAsync()
         {
-            var embed = new EmbedBuilder()
-                .WithTitle("Temporary voice channels")
-                .WithDescription(string.Join("\n", _hubs.Select(id => $"<#{id}>")))
-                .WithColor(Color.Green)
-                .Build();
-            await RespondAsync(embed: embed, ephemeral: true);
+            await RespondAsync(embed: _embedFactory.Hubs(_hubs), ephemeral: true);
         }
 
         private async Task HandleTemporaryVoiceChannelsAsync(SocketUser user, SocketVoiceState before, SocketVoiceState after)

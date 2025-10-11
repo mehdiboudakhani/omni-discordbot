@@ -1,6 +1,4 @@
-﻿using Omni.Modules;
-
-namespace Omni
+﻿namespace Omni
 {
     class Bot
     {
@@ -20,6 +18,7 @@ namespace Omni
             _serviceProvider = new ServiceCollection()
                 .AddSingleton(_discordSocketClient)
                 .AddSingleton(serviceProvider => new InteractionService(serviceProvider.GetRequiredService<DiscordSocketClient>()))
+                .AddSingleton<EmbedFactory>()
                 .BuildServiceProvider();
             _interactionService = _serviceProvider.GetRequiredService<InteractionService>();
         }
