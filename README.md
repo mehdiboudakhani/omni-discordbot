@@ -14,7 +14,7 @@ Omni is a small multifunctional Discord bot built with **Discord.Net**.
 - GitHub token (Generate a token [here](https://github.com/settings/tokens))
 
 ## 🚀 Installation
-Clone the repository
+Clone the repository.
 ```bash
 git clone https://github.com/mehdiboudakhani/omni-discordbot
 ```
